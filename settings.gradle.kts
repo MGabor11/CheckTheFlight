@@ -29,3 +29,7 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":domain")
+include(":data")
+include(":dibridge")
+include(":common")

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_title">Welcome</string>
+    <string name="welcome_button">Start</string>
+    <string name="info_title">Info</string>
+    <string name="info_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="info_button_text">Next step</string>
+    <string name="home_title">Home</string>
+    <string name="home_exit_button_text">Exit</string>
+    <string name="detail_title">Detail</string>
+    <string name="detail_departures_subtitle">Departures:</string>
+</resources>

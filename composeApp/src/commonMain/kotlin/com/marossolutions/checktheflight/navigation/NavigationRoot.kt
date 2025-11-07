@@ -2,6 +2,7 @@ package com.marossolutions.checktheflight.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
@@ -18,19 +19,18 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NavigationRoot(
-    simpleNavigator: SimpleNavigator,
-    innerPadding: PaddingValues,
-    topLevelBackStack: TopLevelBackStack<AppScreen>,
+    backStack: SnapshotStateList<AppScreen>,
+    onBackPress : () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavDisplay(
         modifier = modifier,
-        backStack = topLevelBackStack.backStack,
+        backStack = backStack,
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator()
         ),
-        onBack = { topLevelBackStack.removeLast() },
+        onBack = onBackPress,
         entryProvider = entryProvider {
             entry<AppScreen.ScreenWelcome> {
                 WelcomeScreen()

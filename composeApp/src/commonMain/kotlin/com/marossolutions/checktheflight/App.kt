@@ -22,10 +22,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.marossolutions.checktheflight.navigation.AppScreen
-import com.marossolutions.checktheflight.navigation.NavigationEvent
 import com.marossolutions.checktheflight.navigation.NavigationRoot
 import com.marossolutions.checktheflight.navigation.SimpleNavigator
-import com.marossolutions.checktheflight.navigation.TopLevelBackStack
 import com.marossolutions.checktheflight.theme.AppTheme
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -36,26 +34,6 @@ import org.koin.compose.koinInject
 fun App() {
     AppTheme {
         val simpleNavigator = koinInject<SimpleNavigator>()
-        val topLevelBackStack = koinInject<TopLevelBackStack<AppScreen>>()
-
-        LaunchedEffect(Unit) {
-            simpleNavigator.navigationEvents
-                .onEach { navigateEvent ->
-                    when (navigateEvent) {
-                        is NavigationEvent.ForwardNavigation -> {
-                            val (screen, navigationOptions) = navigateEvent
-                            if (screen is AppScreen.BottomNavScreen) {
-                                topLevelBackStack.switchTopLevel(screen)
-                            } else {
-                                topLevelBackStack.add(screen, navigationOptions)
-                            }
-                        }
-
-                        NavigationEvent.NavigateUp -> topLevelBackStack.removeLast()
-                    }
-                }
-                .launchIn(this)
-        }
 
         Scaffold(
             topBar = {
@@ -67,7 +45,7 @@ fun App() {
                     title = {
                         val title by remember {
                             derivedStateOf {
-                                topLevelBackStack.backStack.lastOrNull()?.title ?: ""
+                                simpleNavigator.backStack.lastOrNull()?.title ?: ""
                             }
                         }
                         Text(title)
@@ -75,7 +53,7 @@ fun App() {
                     navigationIcon = {
                         val showBackButton by remember {
                             derivedStateOf {
-                                topLevelBackStack.backStack.size > 1
+                                simpleNavigator.backStack.size > 1
                             }
                         }
 
@@ -93,7 +71,7 @@ fun App() {
             bottomBar = {
                 val showShowNavigationBar by remember {
                     derivedStateOf {
-                        topLevelBackStack.backStack.lastOrNull() is AppScreen.BottomNavScreen
+                        simpleNavigator.backStack.lastOrNull() is AppScreen.BottomNavScreen
                     }
                 }
 
@@ -105,12 +83,10 @@ fun App() {
                 AnimatedVisibility(showShowNavigationBar) {
                     NavigationBar {
                         bottomNavItems.forEach { item ->
-                            val selected = topLevelBackStack.topLevelKey == item
+                            val selected = simpleNavigator.getTopLevelScreen() == item
                             NavigationBarItem(
                                 selected = selected,
-                                onClick = {
-                                    topLevelBackStack.switchTopLevel(item)
-                                },
+                                onClick = { simpleNavigator.navigateTo(item) },
                                 icon = {
                                     Icon(
                                         imageVector = item.navIcon,
@@ -127,9 +103,8 @@ fun App() {
             }
         ) { innerPadding ->
             NavigationRoot(
-                simpleNavigator = simpleNavigator,
-                innerPadding = innerPadding,
-                topLevelBackStack = topLevelBackStack,
+                backStack = simpleNavigator.backStack,
+                onBackPress = { simpleNavigator.navigateUp() },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)

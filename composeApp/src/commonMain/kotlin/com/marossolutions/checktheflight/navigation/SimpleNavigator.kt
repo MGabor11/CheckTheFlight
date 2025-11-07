@@ -1,16 +1,13 @@
 package com.marossolutions.checktheflight.navigation
 
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import androidx.compose.runtime.snapshots.SnapshotStateList
 
 interface SimpleNavigator {
 
-    val navigationEvents: SharedFlow<NavigationEvent>
+    val backStack: SnapshotStateList<AppScreen>
 
-   /* val currentAppScreen: StateFlow<AppScreen?>
+    fun getTopLevelScreen(): AppScreen
 
-    fun setCurrentAppScreen(screen: AppScreen?)
-*/
     fun navigateTo(screen: AppScreen, navigationOptions: NavigationOptions? = null)
 
     fun navigateUp()

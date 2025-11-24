@@ -1,6 +1,8 @@
 package com.marossolutions.checktheflight.di
 
+import com.marossolutions.checktheflight.notification.NotificationManager
 import kotlinx.cinterop.ExperimentalForeignApi
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -19,6 +21,7 @@ actual val platformModule = module {
             name = dbFilePath,
         )
     }*/
+    singleOf(::NotificationManager)
 }
 
 @OptIn(ExperimentalForeignApi::class)

@@ -1,15 +1,15 @@
 package com.marossolutions.data.service
 
-import com.marossolutions.data.network.AirlineRemoteService
+import com.marossolutions.data.network.AirlineApi
 import com.marossolutions.data.network.AirlineResponse
 import com.marossolutions.domain.model.Airline
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
-internal class AirlineServiceImpl(
-    private val airlineRemoteService: AirlineRemoteService,
-) : AirlineService {
+internal class AirlineRemoteDataSourceImpl(
+    private val airlineApi: AirlineApi,
+) : AirlineRemoteDataSource {
 
     override suspend fun getAirlineByIcao(airlineIcao: String): Airline? = fetchAirline(airlineIcao)
         ?.toAirline()
@@ -23,7 +23,7 @@ internal class AirlineServiceImpl(
         }
 
     private suspend fun fetchAirline(airlineIcao: String) =
-        airlineRemoteService.getAirline(airlineIcao)
+        airlineApi.getAirline(airlineIcao)
 
     private fun AirlineResponse.toAirline() = Airline(
         icao = this.icao,

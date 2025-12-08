@@ -8,6 +8,5 @@ val diBridgeModule = module {
     includes(
         commonModule,
         dataModule,
-        repositoryModule
     )
 }

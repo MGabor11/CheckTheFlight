@@ -1,6 +1,6 @@
 package com.marossolutions.data.network
 
-internal interface AirlineRemoteService {
+internal interface AirlineApi {
 
     suspend fun getAirline(icao: String): AirlineResponse?
 }

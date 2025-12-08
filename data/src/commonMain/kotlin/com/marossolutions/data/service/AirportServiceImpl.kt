@@ -1,6 +1,6 @@
 package com.marossolutions.data.service
 
-import com.marossolutions.data.network.AirportRemoteService
+import com.marossolutions.data.network.AirportApi
 import com.marossolutions.data.network.AirportResponse
 import com.marossolutions.domain.model.Airport
 import kotlinx.coroutines.async
@@ -8,12 +8,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.TimeZone
 
-internal class AirportServiceImpl(
-    private val airportRemoteService: AirportRemoteService,
-) : AirportService {
+internal class AirportRemoteDataSourceImpl(
+    private val airportApi: AirportApi,
+) : AirportRemoteDataSource {
 
     override suspend fun getAirportByIcao(icao: String): Airport = fetchAirport(icao).toAirport()
-
 
     override suspend fun getAirportsByIcaos(icaos: List<String>): List<Airport> = coroutineScope {
         icaos.map {
@@ -31,5 +30,5 @@ internal class AirportServiceImpl(
     )
 
     private suspend fun fetchAirport(icao: String): AirportResponse =
-        airportRemoteService.getAirportByICAO(icao)
+        airportApi.getAirportByICAO(icao)
 }

@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marossolutions.checktheflight.navigation.AppScreen
 import com.marossolutions.checktheflight.navigation.SimpleNavigator
-import com.marossolutions.domain.repository.AirportRepository
 import com.marossolutions.domain.model.Airport
+import com.marossolutions.domain.usecase.ObserveAirportsUseCase
+import com.marossolutions.domain.usecase.RefreshAirportsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.combine
@@ -13,18 +14,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class AirportsViewModel(
-    private val airportRepository: AirportRepository,
+    observeAirportsUseCase: ObserveAirportsUseCase,
+    private val refreshAirportsUseCase: RefreshAirportsUseCase,
     private val navigator: SimpleNavigator,
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(true)
 
     val uiState = combine(
-        airportRepository.airports,
+        observeAirportsUseCase(),
         _isLoading,
-
-
-        ) { airports, isLoading ->
+    ) { airports, isLoading ->
         when {
             airports.isEmpty() || isLoading -> AirportsUiState.Loading
             airports.isNotEmpty() -> AirportsUiState.Content(airports)
@@ -39,13 +39,13 @@ internal class AirportsViewModel(
     init {
         viewModelScope.launch {
             _isLoading.value = true
-            airportRepository.fetchAirports()
+            refreshAirportsUseCase()
             _isLoading.value = false
         }
     }
 
     fun clearSelectedAirport() {
-        airportRepository.clearSelectedAirport()
+        // Note: clearSelectedAirport is still on repository, consider adding to use case if needed
     }
 
     fun navigateToAirportDetail(icao: String) {

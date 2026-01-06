@@ -6,4 +6,13 @@ expect class NotificationManager {
         title: String,
         description: String
     )
+
+    suspend fun showFlightInfoNotification(
+        title: String,
+        description: String
+    )
+
+    fun requestNotificationPermission()
+
+    fun isNotificationPermissionGranted(): Boolean
 }

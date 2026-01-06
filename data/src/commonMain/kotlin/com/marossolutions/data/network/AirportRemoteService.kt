@@ -1,6 +1,6 @@
 package com.marossolutions.data.network
 
-internal interface AirportRemoteService {
+internal interface AirportApi {
 
     suspend fun getAirports(countryCode: String): List<AirportResponse>
 

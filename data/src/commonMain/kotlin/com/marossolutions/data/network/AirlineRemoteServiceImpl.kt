@@ -6,11 +6,11 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import kotlinx.coroutines.withContext
 
-internal class AirlineRemoteServiceImpl(
+internal class AirlineApiImpl(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
     private val apiNinjaBaseUrl: String,
-) : AirlineRemoteService {
+) : AirlineApi {
 
     override suspend fun getAirline(icao: String): AirlineResponse? = withContext(dispatcherProvider.io) {
         val response = httpClient.get(apiNinjaBaseUrl + "airlines?icao=" + icao).body<List<AirlineResponse>>()

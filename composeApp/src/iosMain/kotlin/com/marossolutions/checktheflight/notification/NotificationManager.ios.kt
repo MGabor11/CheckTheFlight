@@ -55,4 +55,17 @@ actual class NotificationManager {
             }
         }
     }
+
+    actual fun requestNotificationPermission() {
+        // TODO
+    }
+
+    actual fun isNotificationPermissionGranted(): Boolean {
+        // TODO
+        return true
+    }
+
+    actual suspend fun showFlightInfoNotification(title: String, description: String) {
+        showNotification(title, description)
+    }
 }

@@ -2,7 +2,7 @@ package com.marossolutions.data.service
 
 import com.marossolutions.domain.model.Airline
 
-interface AirlineService {
+interface AirlineRemoteDataSource {
 
     suspend fun getAirlineByIcao(airlineIcao: String) : Airline?
 

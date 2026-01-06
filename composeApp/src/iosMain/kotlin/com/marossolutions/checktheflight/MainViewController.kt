@@ -5,8 +5,7 @@ import com.marossolutions.checktheflight.di.initKoin
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        initKoin()
-
+        //initKoin()
 
     }
 ) { App() }

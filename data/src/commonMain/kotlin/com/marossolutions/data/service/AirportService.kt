@@ -2,7 +2,7 @@ package com.marossolutions.data.service
 
 import com.marossolutions.domain.model.Airport
 
-interface AirportService {
+interface AirportRemoteDataSource {
 
     suspend fun getAirportByIcao(icao: String): Airport
 

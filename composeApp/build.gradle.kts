@@ -36,7 +36,9 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
-
+            // WorkManager
+            implementation(libs.androidx.work.runtime.ktx)
+            implementation(libs.koin.workmanager)
         }
         commonMain.dependencies {
             implementation(libs.bundles.compose)

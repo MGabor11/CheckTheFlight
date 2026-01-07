@@ -1,17 +1,17 @@
 package com.marossolutions.checktheflight.navigation
 
-import androidx.navigation3.runtime.EntryProviderScope
+/*import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import com.marossolutions.checktheflight.ui.airlinedetail.AirlineDetailScreen
-import com.marossolutions.checktheflight.ui.airlines.AirlinesScreen
-import com.marossolutions.checktheflight.ui.airportdetail.AirportDetailScreen
-import com.marossolutions.checktheflight.ui.airports.AirportsScreen
-import com.marossolutions.checktheflight.ui.home.HomeScreen
+import com.marossolutions.airline.ui.AirlineDetailScreen
+import com.marossolutions.airline.ui.AirlinesScreen
+import com.marossolutions.airport.ui.AirportDetailScreen
+import com.marossolutions.airport.ui.AirportsScreen
+import com.marossolutions.home.ui.HomeScreen
 import com.marossolutions.checktheflight.ui.welcome.WelcomeScreen
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
+import org.koin.core.parameter.parametersOf*/
 
-fun EntryProviderScope<AppScreen>.appEntries() {
+/*fun EntryProviderScope<AppScreen>.appEntries() {
     entry<AppScreen.ScreenWelcome> {
         WelcomeScreen()
     }
@@ -38,4 +38,4 @@ fun EntryProviderScope<AppScreen>.appEntries() {
             }
         )
     }
-}
+}*/

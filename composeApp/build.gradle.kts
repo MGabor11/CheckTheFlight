@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kotlinSerialization) // TODO
 }
 
 kotlin {
@@ -41,11 +41,21 @@ kotlin {
             implementation(libs.koin.workmanager)
         }
         commonMain.dependencies {
+            // Modules
+            implementation(project(path = ":core:common"))
+            implementation(project(":core:domain"))
+            implementation(project(path = ":core:data"))
+            implementation(project(":core:navigation"))
+            implementation(project(":core:ui"))
+
+            implementation(project(path = ":feature:welcome"))
+            implementation(project(":feature:home"))
+            implementation(project(":feature:airport"))
+            implementation(project(path = ":feature:airline"))
+
             implementation(libs.bundles.compose)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.kamel.image)
 
             // DI
             api(libs.koin.core)
@@ -55,12 +65,6 @@ kotlin {
             // Navigation
             implementation(libs.androidx.navigation3.runtime)
             implementation(libs.androidx.navigation3.ui)
-            implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-            implementation(libs.kotlinx.serialization.core)
-
-            // Modules
-            implementation(project(path = ":domain"))
-            implementation(project(path = ":dibridge"))
         }
         iosMain.dependencies {
 

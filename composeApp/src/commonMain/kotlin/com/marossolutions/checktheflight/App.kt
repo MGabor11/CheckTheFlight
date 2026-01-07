@@ -9,8 +9,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,19 +19,27 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.marossolutions.checktheflight.navigation.AppScreen
+import com.marossolutions.checktheflight.navigation.HomeNavigationBar
 import com.marossolutions.checktheflight.navigation.NavigationRoot
-import com.marossolutions.checktheflight.navigation.SimpleNavigator
-import com.marossolutions.checktheflight.theme.AppTheme
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.marossolutions.navigation.Navigator
+import com.marossolutions.navigation.Route
+import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
+import com.marossolutions.navigation.rememberNavigationState
+import com.marossolutions.theme.AppTheme
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
     AppTheme {
-        val simpleNavigator = koinInject<SimpleNavigator>()
+        val navigationState = rememberNavigationState(
+            startRoute = Route.ScreenWelcome,
+            topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys
+        )
+        val navigator = koinInject<Navigator>()
+        LaunchedEffect(Unit) {
+            navigator.setNavigationState(navigationState)
+        }
 
         Scaffold(
             topBar = {
@@ -45,7 +51,7 @@ fun App() {
                     title = {
                         val title by remember {
                             derivedStateOf {
-                                simpleNavigator.backStack.lastOrNull()?.title ?: ""
+                                navigationState.currentRoute?.title ?: ""
                             }
                         }
                         Text(title)
@@ -53,12 +59,12 @@ fun App() {
                     navigationIcon = {
                         val showBackButton by remember {
                             derivedStateOf {
-                                simpleNavigator.backStack.size > 1
+                                navigationState.canNavigateBack
                             }
                         }
 
                         if (showBackButton) {
-                            IconButton(onClick = { simpleNavigator.navigateUp() }) {
+                            IconButton(onClick = { navigator.navigateBack() }) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = null
@@ -71,43 +77,26 @@ fun App() {
             bottomBar = {
                 val showShowNavigationBar by remember {
                     derivedStateOf {
-                        simpleNavigator.backStack.lastOrNull() is AppScreen.BottomNavScreen
+                        navigationState.isInTopLevel
                     }
                 }
 
-                val bottomNavItems = listOf(
-                    AppScreen.BottomNavScreen.ScreenHome,
-                    AppScreen.BottomNavScreen.ScreenAirports,
-                    AppScreen.BottomNavScreen.ScreenAirlines
-                )
                 AnimatedVisibility(showShowNavigationBar) {
-                    NavigationBar {
-                        bottomNavItems.forEach { item ->
-                            val selected = simpleNavigator.getTopLevelScreen() == item
-                            NavigationBarItem(
-                                selected = selected,
-                                onClick = { simpleNavigator.navigateTo(item) },
-                                icon = {
-                                    Icon(
-                                        imageVector = item.navIcon,
-                                        contentDescription = item.navTitle
-                                    )
-                                },
-                                label = {
-                                    Text(item.navTitle)
-                                },
-                            )
+                    HomeNavigationBar(
+                        selectedKey = navigationState.currentTopLevelRoute,
+                        onSelectKey = {
+                            navigator.switchTopLevel(it)
                         }
-                    }
+                    )
                 }
             }
         ) { innerPadding ->
             NavigationRoot(
-                backStack = simpleNavigator.backStack,
-                onBackPress = { simpleNavigator.navigateUp() },
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .padding(innerPadding),
+                onBackPress = { navigator.navigateBack() },
+                navigationState = navigationState
             )
         }
     }

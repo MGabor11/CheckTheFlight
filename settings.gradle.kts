@@ -29,7 +29,14 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":domain")
-include(":data")
-include(":dibridge")
-include(":common")
+
+include(":core:domain")
+include(":core:data")
+include(":core:common")
+include(":core:navigation")
+include(":core:ui")
+
+include(":feature:welcome")
+include(":feature:home")
+include(":feature:airport")
+include(":feature:airline")

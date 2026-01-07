@@ -1,29 +1,33 @@
 package com.marossolutions.checktheflight.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.marossolutions.airline.navigation.airlineEntry
+import com.marossolutions.airport.navigation.airportEntry
+import com.marossolutions.home.navigation.homeEntry
+import com.marossolutions.navigation.NavigationState
+import com.marossolutions.navigation.toEntries
+import com.marossolutions.welcome.navigation.welcomeEntry
 
 @Composable
 fun NavigationRoot(
-    backStack: SnapshotStateList<AppScreen>,
+    navigationState: NavigationState,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val entryProvider = entryProvider {
+        welcomeEntry()
+        homeEntry()
+        airportEntry()
+        airlineEntry()
+    }
+
     NavDisplay(
         modifier = modifier,
-        backStack = backStack,
-        entryDecorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator(),
-            rememberViewModelStoreNavEntryDecorator()
-        ),
         onBack = onBackPress,
-        entryProvider = entryProvider {
-            appEntries()
-        }
+        entries = navigationState.toEntries(entryProvider)
     )
 }

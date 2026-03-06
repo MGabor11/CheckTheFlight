@@ -8,7 +8,7 @@ plugins {
 
 kotlin {
     androidLibrary {
-        namespace = "com.marossolutions.ui"
+        namespace = "com.marossolutions.designsystem"
         compileSdk = 36
         minSdk = 30
 
@@ -77,4 +77,3 @@ kotlin {
         }
     }
 }
-

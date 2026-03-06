@@ -51,8 +51,17 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
+        androidMain {
+            dependencies {
+                implementation(libs.compose.uiTooling)
+            }
+        }
         commonMain {
             dependencies {
+                // Modules
+                implementation(project(":core:navigation"))
+                implementation(project(":core:designsystem"))
+
                 implementation(libs.kotlin.stdlib)
 
                 implementation(libs.bundles.compose)
@@ -65,9 +74,7 @@ kotlin {
 
                 implementation(libs.androidx.navigation3.runtime)
 
-                // Modules
-                implementation(project(":core:navigation"))
-                implementation(project(":core:ui"))
+
             }
         }
 

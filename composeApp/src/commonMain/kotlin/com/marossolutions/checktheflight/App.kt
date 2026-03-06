@@ -1,7 +1,13 @@
 package com.marossolutions.checktheflight
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,19 +25,25 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.marossolutions.checktheflight.navigation.HomeNavigationBar
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.unit.dp
+import com.marossolutions.checktheflight.navigation.MainMenuBottomAppBar
 import com.marossolutions.checktheflight.navigation.NavigationRoot
 import com.marossolutions.navigation.Navigator
 import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
 import com.marossolutions.navigation.rememberNavigationState
-import com.marossolutions.theme.AppTheme
+import com.marossolutions.theme.CheckTheFlightTheme
 import org.koin.compose.koinInject
+
+private const val BarSlideDurationMs = 500
+private const val BarSlideDelayMs = 300
+private val BottomBarHeight = 80.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
-    AppTheme {
+    CheckTheFlightTheme {
         val navigationState = rememberNavigationState(
             startRoute = Route.ScreenWelcome,
             topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys.toSet()
@@ -44,7 +56,7 @@ fun App() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
@@ -74,30 +86,58 @@ fun App() {
                     }
                 )
             },
-            bottomBar = {
-                val showShowNavigationBar by remember {
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                NavigationRoot(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
+                    onBackPress = { navigator.navigateBack() },
+                    navigationState = navigationState
+                )
+
+                val showNavigationBar by remember {
                     derivedStateOf {
-                        navigationState.isInTopLevel
+                        navigationState.isInTopLevel && navigationState.currentRoute in TOP_LEVEL_DESTINATIONS.keys
                     }
                 }
 
-                AnimatedVisibility(showShowNavigationBar) {
-                    HomeNavigationBar(
-                        selectedKey = navigationState.currentTopLevelRoute,
-                        onSelectKey = {
-                            navigator.switchTopLevel(it)
-                        }
-                    )
+                // Bar height animates: content slides up from below
+                val barHeight by animateDpAsState(
+                    targetValue = if (showNavigationBar) {
+                        BottomBarHeight
+                    } else {
+                        0.dp
+                    },
+                    animationSpec = tween(
+                        durationMillis = BarSlideDurationMs,
+                        delayMillis = BarSlideDelayMs,
+                    ),
+                )
+
+                if (barHeight > 0.dp) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(barHeight)
+                            .clipToBounds(),
+                    ) {
+                        MainMenuBottomAppBar(
+                            modifier = Modifier.offset(y = BottomBarHeight - barHeight),
+                            selectedKey = navigationState.currentTopLevelRoute,
+                            onSelectKey = {
+                                if (showNavigationBar) {
+                                    navigator.switchTopLevel(it)
+                                }
+                            },
+                        )
+                    }
                 }
             }
-        ) { innerPadding ->
-            NavigationRoot(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                onBackPress = { navigator.navigateBack() },
-                navigationState = navigationState
-            )
         }
     }
 }

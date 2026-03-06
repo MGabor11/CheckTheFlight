@@ -1,21 +1,28 @@
 package com.marossolutions.airline.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import checktheflight.feature.airline.generated.resources.Res
+import checktheflight.feature.airline.generated.resources.airlines_title
 import com.marossolutions.airline.viewmodel.AirlinesViewModel
 import com.marossolutions.domain.model.Airline
 import com.marossolutions.component.FullScreenLoading
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -53,20 +60,28 @@ private fun Content(
     airlines: List<Airline>,
     onAirlineSelected: (String) -> Unit,
 ) {
-    Box {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            itemsIndexed(airlines) { index, airline ->
-                Column {
-                    AirlineItem(
-                        airline = airline,
-                        onItemClick = { onAirlineSelected(airline.icao) }
-                    )
-                    if (index == airlines.lastIndex) {
-                        Spacer(Modifier.height(64.dp))
-                    }
-                }
-            }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        item {
+            Text(
+                text = stringResource(Res.string.airlines_title),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+            )
+        }
+        itemsIndexed(airlines) { _, airline ->
+            AirlineItem(
+                airline = airline,
+                onItemClick = { onAirlineSelected(airline.icao) },
+            )
         }
     }
 }
-

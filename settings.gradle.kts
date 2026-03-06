@@ -34,7 +34,7 @@ include(":core:domain")
 include(":core:data")
 include(":core:common")
 include(":core:navigation")
-include(":core:ui")
+include(":core:designsystem")
 
 include(":feature:welcome")
 include(":feature:home")

@@ -1,5 +1,6 @@
 package com.marossolutions.checktheflight.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -11,13 +12,14 @@ import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
 
 @Composable
-fun HomeNavigationBar(
+fun MainMenuBottomAppBar(
     selectedKey: Route?,
     onSelectKey: (Route) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BottomAppBar(
         modifier = modifier,
+        windowInsets = WindowInsets(0, 0, 0, 0),
     ) {
         TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination: Route, data: BottomNavItem) ->
             NavigationBarItem(

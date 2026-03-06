@@ -1,5 +1,6 @@
 package com.marossolutions.home.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marossolutions.component.FlightNumberTextField
 import com.marossolutions.component.FullScreenLoading
 import com.marossolutions.home.viewmodel.HomeViewModel
-import com.marossolutions.theme.AppTheme
+import com.marossolutions.theme.CheckTheFlightTheme
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -62,6 +63,7 @@ private fun HomeScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp)
             .verticalScroll(rememberScrollState()),
         contentAlignment = Alignment.Center
@@ -124,7 +126,7 @@ private fun HomeScreenContent(
 @Preview
 @Composable
 private fun HomeScreenContentPreview() {
-    AppTheme {
+    CheckTheFlightTheme {
         HomeScreenContent(
             contentState = HomeViewModel.HomeUiState.Content(
                 flightNumber = "LH1234",

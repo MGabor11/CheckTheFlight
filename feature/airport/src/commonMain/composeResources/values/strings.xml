@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="airports_title">Airports</string>
+    <string name="airport_icao_label">ICAO</string>
+    <string name="airport_detail_title">Airport Details</string>
+    <string name="airport_detail_info_section">Information</string>
+    <string name="airport_detail_location_section">Location</string>
+    <string name="airport_detail_name_label">Name</string>
+    <string name="airport_detail_icao_label">ICAO Code</string>
+    <string name="airport_detail_city_label">City</string>
+    <string name="airport_detail_timezone_label">Time Zone</string>
+    <string name="airport_detail_coordinates_label">Coordinates</string>
+</resources>
+

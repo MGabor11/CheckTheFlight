@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Flight Tracker</string>
+    <string name="home_subtitle">Enter a flight number to track its status in real time</string>
+    <string name="home_tracked_flight_label">Tracking</string>
+    <string name="home_no_flight_label">No flight selected</string>
+    <string name="home_status_section">Sync Status</string>
+    <string name="home_background_fetching_active">Background sync is active</string>
+    <string name="home_background_fetching_inactive">Background sync is inactive</string>
+    <string name="home_last_fetch_label">Last sync</string>
+    <string name="home_last_successful_fetch_label">Last successful sync</string>
+    <string name="home_never">Never</string>
+    <string name="home_start_sync">Start background sync</string>
+    <string name="home_stop_sync">Stop background sync</string>
+    <string name="home_refresh">Refresh now</string>
+    <string name="home_debug_section">Debug info</string>
+</resources>
+

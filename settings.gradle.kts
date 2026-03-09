@@ -35,6 +35,7 @@ include(":core:data")
 include(":core:common")
 include(":core:navigation")
 include(":core:designsystem")
+include(":core:flight-sync")
 
 include(":feature:welcome")
 include(":feature:home")

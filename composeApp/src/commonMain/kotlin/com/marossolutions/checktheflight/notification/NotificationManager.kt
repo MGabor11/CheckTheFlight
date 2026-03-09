@@ -1,13 +1,15 @@
 package com.marossolutions.checktheflight.notification
 
-expect class NotificationManager {
+import com.marossolutions.flightsync.FlightSyncNotifier
 
-    fun showNotification(
+expect class NotificationManager : FlightSyncNotifier {
+
+    override fun showNotification(
         title: String,
         description: String
     )
 
-    suspend fun showFlightInfoNotification(
+    override suspend fun showFlightInfoNotification(
         title: String,
         description: String
     )

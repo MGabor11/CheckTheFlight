@@ -1,6 +1,5 @@
-package com.marossolutions.checktheflight.service
+package com.marossolutions.flightsync
 
-import com.marossolutions.checktheflight.notification.NotificationManager
 import com.marossolutions.domain.model.FlightInfo
 import com.marossolutions.domain.repository.FlightInfoFetchingSettingsRepository
 import com.marossolutions.domain.repository.FlightInfoRepository
@@ -11,15 +10,15 @@ import kotlin.time.ExperimentalTime
 class FlightInfoFetchServiceImpl(
     private val flightInfoRepository: FlightInfoRepository,
     private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository,
-    private val notificationManager: NotificationManager
+    private val notifier: FlightSyncNotifier,
 ) : FlightInfoFetchService {
 
     @OptIn(ExperimentalTime::class)
     override suspend fun fetchFlightInfo(withNotification: Boolean) {
         flightInfoFetchingSettingsRepository.setLastBackgroundFetchTime(Clock.System.now())
         val flightNumber = flightInfoRepository.flightNumber.firstOrNull()
-        flightNumber?.let { flightNumber ->
-            flightInfoRepository.fetchFlightInfo(flightNumber)
+        flightNumber?.let { number ->
+            flightInfoRepository.fetchFlightInfo(number)
             if (withNotification) {
                 val flightInfo = flightInfoRepository.flightInfo.firstOrNull()
                 if (flightInfo != null) {
@@ -31,9 +30,10 @@ class FlightInfoFetchServiceImpl(
     }
 
     private suspend fun showFlightInfoNotification(flightInfo: FlightInfo) {
-        notificationManager.showFlightInfoNotification(
+        notifier.showFlightInfoNotification(
             title = flightInfo.flightNumber,
             description = flightInfo.toString()
         )
     }
 }
+

@@ -1,10 +1,9 @@
-package com.marossolutions.checktheflight.workmanager
+package com.marossolutions.flightsync
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.marossolutions.checktheflight.service.FlightInfoFetchService
 
 class FlightInfoSyncWorker(
     appContext: Context,
@@ -18,3 +17,4 @@ class FlightInfoSyncWorker(
         return Result.success()
     }
 }
+

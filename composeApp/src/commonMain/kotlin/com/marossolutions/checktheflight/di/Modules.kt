@@ -6,6 +6,7 @@ import com.marossolutions.common.di.commonModule
 import com.marossolutions.data.di.dataModule
 import com.marossolutions.di.navigationModule
 import com.marossolutions.domain.di.domainModule
+import com.marossolutions.flightsync.di.flightSyncModule
 import com.marossolutions.home.di.homeModule
 import com.marossolutions.welcome.di.welcomeModule
 import org.koin.core.module.Module
@@ -19,7 +20,7 @@ val sharedModule = module {
         domainModule,
         dataModule,
         navigationModule,
-        serviceModule,
+        flightSyncModule,
 
         // Features
         welcomeModule,

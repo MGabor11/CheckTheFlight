@@ -25,6 +25,7 @@ kotlin {
          iosTarget.binaries.framework {
              baseName = "ComposeApp"
              isStatic = true
+             export(project(":core:flight-sync"))
          }
      }
 
@@ -47,6 +48,7 @@ kotlin {
             implementation(project(path = ":core:data"))
             implementation(project(":core:navigation"))
             implementation(project(":core:designsystem"))
+            api(project(":core:flight-sync"))
 
             implementation(project(path = ":feature:welcome"))
             implementation(project(":feature:home"))

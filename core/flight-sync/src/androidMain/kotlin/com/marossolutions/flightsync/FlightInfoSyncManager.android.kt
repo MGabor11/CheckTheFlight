@@ -1,4 +1,4 @@
-package com.marossolutions.checktheflight.manager
+package com.marossolutions.flightsync
 
 import android.content.Context
 import androidx.work.Constraints
@@ -6,16 +6,15 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.marossolutions.checktheflight.workmanager.FlightInfoSyncWorker
 import com.marossolutions.domain.repository.FlightInfoFetchingSettingsRepository
 import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 
 private const val WORK_NAME = "flight_sync"
 
-actual class FlightSyncManager(
+actual class FlightInfoSyncManager(
     private val context: Context,
-    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository
+    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository,
 ) {
     actual suspend fun startFlightBackgroundSync() {
         val constraints = Constraints.Builder()
@@ -45,3 +44,4 @@ actual class FlightSyncManager(
     actual suspend fun isFlightBackgroundSyncRunning(): Boolean =
         flightInfoFetchingSettingsRepository.isPeriodicFlightInfoFetchingEnabled.first()
 }
+

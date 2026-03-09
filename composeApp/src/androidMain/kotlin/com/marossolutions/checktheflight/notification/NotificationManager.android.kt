@@ -8,15 +8,16 @@ import androidx.core.app.NotificationManagerCompat
 import com.marossolutions.checktheflight.R
 import com.marossolutions.checktheflight.notification.NotificationConstants.CHANNEL_ID
 import com.marossolutions.domain.provider.NotificationIdProvider
+import com.marossolutions.flightsync.FlightSyncNotifier
 
 private const val DEFAULT_NOTIFICATION_ID = 1
 
 actual class NotificationManager(
     private val context: Context,
     private val notificationIdProvider: NotificationIdProvider,
-) {
+) : FlightSyncNotifier {
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    actual fun showNotification(
+    actual override fun showNotification(
         title: String,
         description: String,
     ) {
@@ -28,7 +29,8 @@ actual class NotificationManager(
             .from(context)
             .areNotificationsEnabled()
 
-    actual suspend fun showFlightInfoNotification(title: String, description: String) {
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    actual override suspend fun showFlightInfoNotification(title: String, description: String) {
         val notificationId = notificationIdProvider.getNotificationId()
         sendNotification(title = title, description = description, notificationId = notificationId)
     }

@@ -6,6 +6,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.marossolutions.navigation.BottomNavItem
 import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
 
@@ -18,7 +19,7 @@ fun HomeNavigationBar(
     BottomAppBar(
         modifier = modifier,
     ) {
-        TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination, data) ->
+        TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination: Route, data: BottomNavItem) ->
             NavigationBarItem(
                 selected = topLevelDestination == selectedKey,
                 onClick = {

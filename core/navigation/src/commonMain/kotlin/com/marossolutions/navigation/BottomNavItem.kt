@@ -11,7 +11,7 @@ data class BottomNavItem(
     val title: String,
 )
 
-val TOP_LEVEL_DESTINATIONS = mapOf(
+val TOP_LEVEL_DESTINATIONS: Map<Route, BottomNavItem> = mapOf(
     Route.ScreenHome to BottomNavItem(
         icon = Icons.Outlined.Checklist,
         title = "Todos"

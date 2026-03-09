@@ -34,7 +34,7 @@ fun App() {
     AppTheme {
         val navigationState = rememberNavigationState(
             startRoute = Route.ScreenWelcome,
-            topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys
+            topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys.toSet()
         )
         val navigator = koinInject<Navigator>()
         LaunchedEffect(Unit) {

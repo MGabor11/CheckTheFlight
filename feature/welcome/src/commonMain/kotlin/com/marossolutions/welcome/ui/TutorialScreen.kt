@@ -14,10 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import checktheflight.feature.welcome.generated.resources.Res
 import checktheflight.feature.welcome.generated.resources.welcome_button
-import checktheflight.feature.welcome.generated.resources.welcome_title
 import com.marossolutions.theme.AppTheme
 import com.marossolutions.welcome.viewmodel.TutorialViewModel
-import com.marossolutions.welcome.viewmodel.WelcomeViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 

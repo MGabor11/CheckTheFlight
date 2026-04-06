@@ -19,7 +19,6 @@ fun MainMenuBottomAppBar(
 ) {
     BottomAppBar(
         modifier = modifier,
-        windowInsets = WindowInsets(0, 0, 0, 0),
     ) {
         TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination: Route, data: BottomNavItem) ->
             NavigationBarItem(

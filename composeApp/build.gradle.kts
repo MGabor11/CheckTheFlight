@@ -36,7 +36,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
-            // WorkManager
+            // WorkManager (needed for KoinWorkerFactory initialization in MyApplication)
             implementation(libs.androidx.work.runtime.ktx)
             implementation(libs.koin.workmanager)
         }

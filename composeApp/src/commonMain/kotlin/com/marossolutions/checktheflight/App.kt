@@ -3,10 +3,12 @@ package com.marossolutions.checktheflight
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -86,58 +88,68 @@ fun App() {
                     }
                 )
             },
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                NavigationRoot(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .weight(1f),
-                    onBackPress = { navigator.navigateBack() },
-                    navigationState = navigationState
-                )
-
+            bottomBar = {
                 val showNavigationBar by remember {
                     derivedStateOf {
                         navigationState.isInTopLevel && navigationState.currentRoute in TOP_LEVEL_DESTINATIONS.keys
                     }
                 }
-
-                // Bar height animates: content slides up from below
-                val barHeight by animateDpAsState(
-                    targetValue = if (showNavigationBar) {
-                        BottomBarHeight
-                    } else {
-                        0.dp
-                    },
-                    animationSpec = tween(
-                        durationMillis = BarSlideDurationMs,
-                        delayMillis = BarSlideDelayMs,
-                    ),
+                AnimatedBottomBar(
+                    visible = showNavigationBar,
+                    selectedKey = navigationState.currentTopLevelRoute,
+                    onSelectKey =  navigator::switchTopLevel,
                 )
-
-                if (barHeight > 0.dp) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(barHeight)
-                            .clipToBounds(),
-                    ) {
-                        MainMenuBottomAppBar(
-                            modifier = Modifier.offset(y = BottomBarHeight - barHeight),
-                            selectedKey = navigationState.currentTopLevelRoute,
-                            onSelectKey = {
-                                if (showNavigationBar) {
-                                    navigator.switchTopLevel(it)
-                                }
-                            },
-                        )
-                    }
-                }
             }
+        ) { innerPadding ->
+            NavigationRoot(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                onBackPress =  navigator::navigateBack,
+                navigationState = navigationState
+            )
+        }
+    }
+}
+
+@Composable
+private fun AnimatedBottomBar(
+    visible: Boolean,
+    selectedKey: Route?,
+    onSelectKey: (Route) -> Unit,
+) {
+    val systemBottomInsets = WindowInsets.navigationBars
+        .asPaddingValues()
+        .calculateBottomPadding()
+
+    val totalBarHeight = BottomBarHeight + systemBottomInsets
+
+    val targetValue = if (visible) {
+        totalBarHeight
+    } else {
+        systemBottomInsets
+    }
+
+    val barHeight by animateDpAsState(
+        targetValue = targetValue,
+        animationSpec = tween(
+            durationMillis = BarSlideDurationMs,
+            delayMillis = BarSlideDelayMs,
+        ),
+    )
+
+    if (barHeight > systemBottomInsets) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(barHeight)
+                .clipToBounds(),
+        ) {
+            MainMenuBottomAppBar(
+                modifier = Modifier.offset(y = totalBarHeight - barHeight),
+                selectedKey = selectedKey,
+                onSelectKey = onSelectKey,
+            )
         }
     }
 }

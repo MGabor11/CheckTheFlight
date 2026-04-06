@@ -10,13 +10,5 @@ import org.koin.dsl.module
 actual val platformModule = module {
     singleOf(::NotificationManager)
     singleOf(::FlightSyncManager)
-
-   /* worker { (appContext: Context, params: WorkerParameters) ->
-        FlightInfoSyncWorker(
-            appContext = appContext,
-            workerParams = params,
-            flightInfoFetchService = get(),
-        )
-    }*/
     workerOf(::FlightInfoSyncWorker)
 }

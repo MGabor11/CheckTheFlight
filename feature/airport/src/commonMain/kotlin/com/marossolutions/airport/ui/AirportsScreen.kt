@@ -1,22 +1,28 @@
 package com.marossolutions.airport.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import checktheflight.feature.airport.generated.resources.Res
+import checktheflight.feature.airport.generated.resources.airports_title
 import com.marossolutions.airport.viewmodel.AirportsViewModel
 import com.marossolutions.component.FullScreenLoading
 import com.marossolutions.domain.model.Airport
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -54,20 +60,28 @@ private fun Content(
     airports: List<Airport>,
     onAirportSelected: (String) -> Unit,
 ) {
-    Box {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            itemsIndexed(airports) { index, airport ->
-                Column {
-                    AirportItem(
-                        airport = airport,
-                        onAirportClick = { onAirportSelected(airport.icao) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    if (index == airports.lastIndex) {
-                        Spacer(Modifier.height(64.dp))
-                    }
-                }
-            }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        item {
+            Text(
+                text = stringResource(Res.string.airports_title),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+            )
+        }
+        itemsIndexed(airports) { _, airport ->
+            AirportItem(
+                airport = airport,
+                onAirportClick = { onAirportSelected(airport.icao) },
+            )
         }
     }
 }

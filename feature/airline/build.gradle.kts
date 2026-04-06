@@ -72,7 +72,7 @@ kotlin {
                 // Modules
                 implementation(project(":core:domain"))
                 implementation(project(":core:navigation"))
-                implementation(project(":core:ui"))
+                implementation(project(":core:designsystem"))
             }
         }
 

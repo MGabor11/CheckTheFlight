@@ -25,7 +25,6 @@ actual class FlightSyncManager(
         val request = PeriodicWorkRequestBuilder<FlightInfoSyncWorker>(
             15, TimeUnit.MINUTES
         )
-            //.setInitialDelay(15, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
 
@@ -34,12 +33,6 @@ actual class FlightSyncManager(
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             request = request
         )
-
-       /* val testRequest = OneTimeWorkRequestBuilder<FlightInfoSyncWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .build()
-
-        WorkManager.getInstance(context).enqueue(testRequest)*/
 
         flightInfoFetchingSettingsRepository.setPeriodicFlightInfoFetchingEnabled(true)
     }

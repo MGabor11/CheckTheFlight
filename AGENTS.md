@@ -10,7 +10,7 @@ This is a multi module **Compose Multiplatform (CMP)** project. It targets multi
 - **Architecture:** MVVM. Screens should generally be `internal` and use a dedicated ViewModel.
 
 ## Coding Standards
-- **Previews:** Always wrap `@Preview` functions in the project's theme wrapper (e.g., `AppTheme { ... }`).
+- **Previews:** Always wrap `@Preview` functions in the project's theme wrapper (e.g., `CheckTheFlightTheme { ... }`).
 - **Visibility:** UI Screens in `feature` modules should be `internal` to maintain modularity.
 
 ## Useful Commands

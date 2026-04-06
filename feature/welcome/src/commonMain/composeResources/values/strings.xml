@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">Welcome</string>
-    <string name="welcome_button">Start</string>
+    <string name="welcome_title">CheckTheFlight</string>
+    <string name="welcome_subtitle">Track flights in real time. Get instant updates on departures, arrivals, and delays — all in one place.</string>
+    <string name="welcome_button">Get Started</string>
+
+    <!-- Tutorial strings -->
+    <string name="tutorial_page1_title">Real-Time Tracking</string>
+    <string name="tutorial_page1_description">Monitor any flight around the world with live status updates, including departures, arrivals, and delays.</string>
+    <string name="tutorial_page2_title">Explore Airports</string>
+    <string name="tutorial_page2_description">Browse detailed information about thousands of airports — terminals, gates, and live schedules at your fingertips.</string>
+    <string name="tutorial_page3_title">Know Your Airlines</string>
+    <string name="tutorial_page3_description">Discover airlines operating worldwide. Get fleet details, routes, and up-to-date operational status.</string>
+    <string name="tutorial_next">Next</string>
+    <string name="tutorial_get_started">Get Started</string>
+    <string name="tutorial_skip">Skip</string>
+    <string name="tutorial_step_indicator">Step %1$d of %2$d</string>
 </resources>

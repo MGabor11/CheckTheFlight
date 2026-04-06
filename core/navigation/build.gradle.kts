@@ -16,6 +16,7 @@ kotlin {
         namespace = "com.marossolutions.navigation"
         compileSdk = 36
         minSdk = 30
+        androidResources.enable = true
 
         withHostTestBuilder {
         }

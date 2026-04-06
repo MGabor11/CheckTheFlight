@@ -9,9 +9,10 @@ import androidx.compose.ui.Modifier
 import com.marossolutions.navigation.BottomNavItem
 import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HomeNavigationBar(
+fun MainMenuBottomAppBar(
     selectedKey: Route?,
     onSelectKey: (Route) -> Unit,
     modifier: Modifier = Modifier
@@ -20,6 +21,7 @@ fun HomeNavigationBar(
         modifier = modifier,
     ) {
         TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination: Route, data: BottomNavItem) ->
+            val title = stringResource(data.titleRes)
             NavigationBarItem(
                 selected = topLevelDestination == selectedKey,
                 onClick = {
@@ -28,11 +30,11 @@ fun HomeNavigationBar(
                 icon = {
                     Icon(
                         imageVector = data.icon,
-                        contentDescription = data.title
+                        contentDescription = title
                     )
                 },
                 label = {
-                    Text(data.title)
+                    Text(title)
                 }
             )
         }

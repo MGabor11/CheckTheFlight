@@ -15,6 +15,7 @@ kotlin {
         namespace = "com.marossolutions.home"
         compileSdk = 36
         minSdk = 30
+        androidResources.enable = true
     }
 
     // For iOS targets, this is also where you should
@@ -67,7 +68,9 @@ kotlin {
                 // Modules
                 implementation(project(":core:domain"))
                 implementation(project(":core:navigation"))
-                implementation(project(":core:ui"))
+                implementation(project(":core:designsystem"))
+
+                implementation(libs.kotlinx.datetime)
             }
         }
 

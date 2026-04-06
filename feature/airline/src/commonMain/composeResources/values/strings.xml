@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="airlines_title">Airlines</string>
+    <string name="airlines_empty">No airlines found</string>
+    <string name="airline_icao_label">ICAO</string>
+    <string name="airline_logo_content_description">%1$s logo</string>
+    <string name="airline_detail_title">Airline Details</string>
+    <string name="airline_detail_logo_section">Logo</string>
+    <string name="airline_detail_info_section">Information</string>
+    <string name="airline_detail_name_label">Name</string>
+    <string name="airline_detail_icao_label">ICAO Code</string>
+    <string name="airline_logo_unavailable">No logo available</string>
+</resources>
+

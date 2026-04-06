@@ -36,7 +36,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
-            // WorkManager
+            // WorkManager (needed for KoinWorkerFactory initialization in MyApplication)
             implementation(libs.androidx.work.runtime.ktx)
             implementation(libs.koin.workmanager)
         }
@@ -46,7 +46,7 @@ kotlin {
             implementation(project(":core:domain"))
             implementation(project(path = ":core:data"))
             implementation(project(":core:navigation"))
-            implementation(project(":core:ui"))
+            implementation(project(":core:designsystem"))
 
             implementation(project(path = ":feature:welcome"))
             implementation(project(":feature:home"))

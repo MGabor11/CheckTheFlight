@@ -1,13 +1,11 @@
-package com.marossolutions.checktheflight.manager
+package com.marossolutions.flightsync
 
-import com.marossolutions.checktheflight.scheduler.BackgroundTaskScheduler
 import com.marossolutions.domain.repository.FlightInfoFetchingSettingsRepository
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 
-actual class FlightSyncManager(
+actual class FlightInfoSyncManager(
     private val backgroundTaskScheduler: BackgroundTaskScheduler,
-    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository
+    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository,
 ) {
     actual suspend fun startFlightBackgroundSync() {
         backgroundTaskScheduler.scheduleBackgroundRefresh()
@@ -22,3 +20,4 @@ actual class FlightSyncManager(
     actual suspend fun isFlightBackgroundSyncRunning(): Boolean =
         flightInfoFetchingSettingsRepository.isPeriodicFlightInfoFetchingEnabled.first()
 }
+

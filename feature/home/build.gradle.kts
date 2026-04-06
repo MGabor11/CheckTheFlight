@@ -69,6 +69,7 @@ kotlin {
                 implementation(project(":core:domain"))
                 implementation(project(":core:navigation"))
                 implementation(project(":core:designsystem"))
+                implementation(project(":core:flight-sync"))
 
                 implementation(libs.kotlinx.datetime)
             }

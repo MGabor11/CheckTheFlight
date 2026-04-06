@@ -10,10 +10,11 @@ import platform.UserNotifications.UNNotificationResponse
 import platform.UserNotifications.UNUserNotificationCenter
 import platform.UserNotifications.UNUserNotificationCenterDelegateProtocol
 import platform.darwin.NSObject
+import com.marossolutions.flightsync.FlightSyncNotifier
 
-actual class NotificationManager {
+actual class NotificationManager : FlightSyncNotifier {
 
-    actual fun showNotification(
+    actual override fun showNotification(
         title: String,
         description: String
     ) {
@@ -65,7 +66,7 @@ actual class NotificationManager {
         return true
     }
 
-    actual suspend fun showFlightInfoNotification(title: String, description: String) {
+    actual override suspend fun showFlightInfoNotification(title: String, description: String) {
         showNotification(title, description)
     }
 }

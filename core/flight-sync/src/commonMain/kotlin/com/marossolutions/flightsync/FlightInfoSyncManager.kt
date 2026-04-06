@@ -1,6 +1,6 @@
-package com.marossolutions.checktheflight.manager
+package com.marossolutions.flightsync
 
-expect class FlightSyncManager {
+expect class FlightInfoSyncManager {
 
     suspend fun startFlightBackgroundSync()
 
@@ -8,3 +8,4 @@ expect class FlightSyncManager {
 
     suspend fun isFlightBackgroundSyncRunning(): Boolean
 }
+

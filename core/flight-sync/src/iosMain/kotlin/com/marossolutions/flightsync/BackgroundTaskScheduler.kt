@@ -1,4 +1,4 @@
-package com.marossolutions.checktheflight.scheduler
+package com.marossolutions.flightsync
 
 interface BackgroundTaskScheduler {
 
@@ -10,3 +10,4 @@ interface BackgroundTaskScheduler {
 
     fun reScheduleBackgroundRefreshIfNeeded()
 }
+

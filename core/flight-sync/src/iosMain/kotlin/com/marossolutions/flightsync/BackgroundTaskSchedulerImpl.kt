@@ -1,12 +1,10 @@
-package com.marossolutions.checktheflight.scheduler
+package com.marossolutions.flightsync
 
-import com.marossolutions.checktheflight.service.FlightInfoFetchService
 import com.marossolutions.common.dispatcher.DispatcherProvider
 import com.marossolutions.domain.repository.FlightInfoFetchingSettingsRepository
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import platform.BackgroundTasks.BGAppRefreshTask
@@ -20,7 +18,7 @@ private const val TASK_ID = "com.marossolutions.checktheflight.backgroundRefresh
 class BackgroundTaskSchedulerImpl(
     dispatcherProvider: DispatcherProvider,
     private val flightInfoFetchService: FlightInfoFetchService,
-    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository
+    private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository,
 ) : BackgroundTaskScheduler {
 
     private val scope = CoroutineScope(dispatcherProvider.default)
@@ -70,7 +68,6 @@ class BackgroundTaskSchedulerImpl(
                 task.setTaskCompletedWithSuccess(false)
             }
 
-
             try {
                 flightInfoFetchService.fetchFlightInfo(withNotification = true)
                 task.setTaskCompletedWithSuccess(true)
@@ -80,3 +77,4 @@ class BackgroundTaskSchedulerImpl(
         }
     }
 }
+

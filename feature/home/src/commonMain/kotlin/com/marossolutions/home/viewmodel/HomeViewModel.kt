@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marossolutions.domain.repository.FlightInfoFetchingSettingsRepository
 import com.marossolutions.domain.repository.FlightInfoRepository
+import com.marossolutions.flightsync.FlightInfoFetchService
+import com.marossolutions.flightsync.FlightInfoSyncManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.combine
@@ -14,10 +16,10 @@ import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 internal class HomeViewModel(
-    //private val flightSyncManager: FlightSyncManager, TODO outsource the syncing and fetching logic to a separate module
+    private val flightSyncManager: FlightInfoSyncManager,
     private val flightInfoRepository: FlightInfoRepository,
     private val flightInfoFetchingSettingsRepository: FlightInfoFetchingSettingsRepository,
-    //private val flightInfoFetchService: FlightInfoFetchService,
+    private val flightInfoFetchService: FlightInfoFetchService,
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
@@ -50,13 +52,13 @@ internal class HomeViewModel(
 
     fun startBackgroundFetching() {
         viewModelScope.launch {
-            //flightSyncManager.startFlightBackgroundSync()
+            flightSyncManager.startFlightBackgroundSync()
         }
     }
 
     fun stopBackgroundFetching() {
         viewModelScope.launch {
-            //flightSyncManager.stopFlightBackgroundSync()
+            flightSyncManager.stopFlightBackgroundSync()
         }
     }
 
@@ -68,7 +70,7 @@ internal class HomeViewModel(
 
     fun refreshFlightInfo() {
         viewModelScope.launch {
-            //flightInfoFetchService.fetchFlightInfo(true)
+            flightInfoFetchService.fetchFlightInfo(true)
         }
     }
 

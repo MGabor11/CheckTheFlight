@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom navigation -->
+    <string name="nav_tracker">Tracker</string>
+    <string name="nav_airports">Airports</string>
+    <string name="nav_airlines">Airlines</string>
+
+    <!-- Route titles -->
+    <string name="route_welcome">Welcome</string>
+    <string name="route_tutorial">Tutorial</string>
+    <string name="route_home">Home</string>
+    <string name="route_airports">Airports</string>
+    <string name="route_airport_detail">Airport Detail</string>
+    <string name="route_airlines">Airlines</string>
+    <string name="route_airline_detail">Airline Detail</string>
+</resources>
+

@@ -36,6 +36,7 @@ import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
 import com.marossolutions.navigation.rememberNavigationState
 import com.marossolutions.theme.CheckTheFlightTheme
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 private const val BarSlideDurationMs = 500
@@ -63,12 +64,9 @@ fun App() {
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        val title by remember {
-                            derivedStateOf {
-                                navigationState.currentRoute?.title ?: ""
-                            }
+                        navigationState.currentRoute?.titleRes?.let {
+                            Text(stringResource(it))
                         }
-                        Text(title)
                     },
                     navigationIcon = {
                         val showBackButton by remember {

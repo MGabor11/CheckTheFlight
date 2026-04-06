@@ -1,6 +1,5 @@
 package com.marossolutions.checktheflight.navigation
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -10,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.marossolutions.navigation.BottomNavItem
 import com.marossolutions.navigation.Route
 import com.marossolutions.navigation.TOP_LEVEL_DESTINATIONS
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MainMenuBottomAppBar(
@@ -21,6 +21,7 @@ fun MainMenuBottomAppBar(
         modifier = modifier,
     ) {
         TOP_LEVEL_DESTINATIONS.forEach { (topLevelDestination: Route, data: BottomNavItem) ->
+            val title = stringResource(data.titleRes)
             NavigationBarItem(
                 selected = topLevelDestination == selectedKey,
                 onClick = {
@@ -29,11 +30,11 @@ fun MainMenuBottomAppBar(
                 icon = {
                     Icon(
                         imageVector = data.icon,
-                        contentDescription = data.title
+                        contentDescription = title
                     )
                 },
                 label = {
-                    Text(data.title)
+                    Text(title)
                 }
             )
         }
